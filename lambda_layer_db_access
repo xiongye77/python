@@ -1,0 +1,104 @@
+[cloud_user@ip-10-0-1-105 Section5-BackendLayer]$ more *.py
+::::::::::::::
+pymysql_lambda.py
+::::::::::::::
+import pymysql.cursors
+
+def lambda_handler(event, context):
+# Connect to the database
+  connection = pymysql.connect(host='<IP-OR-DB-CLUSTER-URL>',
+                               user='<username>',
+                               password='<secure-password>',
+                               db='information_schema',
+                               charset='utf8mb4',
+                               cursorclass=pymysql.cursors.DictCursor)
+
+  try:
+      with connection.cursor() as cursor:
+          # Read a single record
+          sql = "select * from information_schema.tables LIMIT 1"
+          cursor.execute(sql)
+          result = cursor.fetchall()
+          print(result)
+  finally:
+      connection.close()
+::::::::::::::
+rds-data-api.py
+::::::::::::::
+import boto3
+
+rds_client = boto3.client('rds-data')
+database_name = 'information_schema'
+db_cluster_arn = '<AURORA-SERVERLESS-DB-ARN>'
+db_credentials_secret = '<SECRETS-MANAGER-SECRET-ARN>'
+
+def lambda_handler(event,context):
+    def execute_statement(sql):
+        response = rds_client.execute_statement(
+            database = database_name,
+            resourceArn = db_cluster_arn,
+            secretArn = db_credentials_secret,
+            sql = sql
+            )
+        return response
+    response = execute_statement(f'create database if not exists moosa')
+    #print(response['records']) Un-comment this if you're runnig a select query and expect rows
+    print(response)
+
+
+
+
+
+zip pymysql_function.zip pymysql_lambda.py
+
+
+aws lambda create-function \
+--memory-size 512  \
+--function-name <NAME_YOUR_FUNCTION> \
+ --runtime python2.7 \
+--handler pymysql_lambda.lambda_handler \
+--zip-file fileb://pymysql_function.zip \
+--role "<ROLE_ARN>"
+
+
+
+aws lambda publish-layer-version --layer-name pymysql-layer --zip-file fileb:///home/cloud_user/pymysql_lambda_layer.zip
+
+aws lambda update-function-configuration --function-name <YOUR_FUNCTION_NAME> --layers <LAYER_VERSION_ARN>
+
+
+
+
+Create RDS Serverless DB
+
+check_circle
+Modify Lambda Function to Add VPC and Subnet Access to It
+
+    Navigate to Lambda.
+    Select the Lambda function's name you created via the CLI.
+    Scroll down to the VPC settings, and change the VPC option from "No VPC" to the only VPC listed in the dropdown. Once you choose a VPC, you'll be able to add subnets and security group.
+    For Subnets, click and add the two available subnets.
+    For Security groups, choose the default one.
+    Click Save in the top right corner.
+
+check_circle
+Get the RDS Serverless DB's Endpoint URL and Plug It into the Lambda Function Code
+
+    Navigate to RDS.
+    Get the RDS Serverless database endpoint URL. Once you click on the database name, it should be under Connectivity & security tab.
+    Head over to the Lambda function and replace the DB host URL, username, and password with the actual values you set up when creating the RDS Serverless DB.
+    Once you're done, click Save in the top right corner.
+
+check_circle
+Create Test Event for Lambda
+
+    In the Lambda function properties, go to the top right corner, click on Configure test event, and create a new test event to test your Lambda function.
+    Keep the Hello World template selected, give your test event a name, and replace the test event body with {}.
+    Click Create.
+
+check_circle
+Test Your Lambda and Aurora RDS Serverless DB Integration Using PyMySQL
+
+    Ensure your RDS Serverless database is in the available state. You can do that by heading to RDS and checking the status against your DB.
+    On the Lambda properties page for your function, make sure your test event in the top right corner is selected and hit Test. You should get a successful execution log and output of the SQL query embedded within the code.
+
