@@ -67,3 +67,61 @@ while True:
     
 [INFO] Sending message: Report themselves source series single shoulder talk. Our major decision eight.
 [INFO] MessageId: 63f642ec-0b3f-4b38-a483-d27ec636ea23
+
+
+
+AWS lambda code as 
+
+
+import json
+import os
+from datetime import datetime
+import logging
+logger = logging.getLogger(__name__)
+
+import boto3
+from botocore.exceptions import ClientError
+
+QUEUE_NAME = os.environ['QUEUE_NAME']
+MAX_QUEUE_MESSAGES = os.environ['MAX_QUEUE_MESSAGES']
+DYNAMODB_TABLE = os.environ['DYNAMODB_TABLE']
+
+sqs = boto3.resource('sqs')
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table(DYNAMODB_TABLE)
+
+def lambda_handler(event, context):
+
+    # Receive messages from SQS queue
+    queue = sqs.get_queue_by_name(QueueName=QUEUE_NAME)
+
+    #print("ApproximateNumberOfMessages:",
+    #      queue.attributes.get('ApproximateNumberOfMessages'))
+    
+    #response = queue.receive_messages(MaxNumberOfMessages=1)
+    try:
+        for message in queue.receive_messages(MaxNumberOfMessages=2):
+    
+            print(message.body)
+    
+            response = table.put_item(
+                Item={
+                'MessageId': message.message_id,
+                'Body': message.body,
+                'Timestamp': datetime.now().isoformat()
+                }
+            )
+            print("Wrote message to DynamoDB:", json.dumps(response))
+
+            # Delete SQS message
+            print("Deleted message:", message.message_id)
+            message.delete()
+        
+    except ClientError as error:
+        logger.exception("Couldn't receive messages from queue: %s", queue)
+        raise error
+    #receipt_handle = message['ReceiptHandle']
+    #sqs.delete_message(
+    #    QueueUrl="https://ap-south-1.queue.amazonaws.com/207880003428/Messages",
+    #    ReceiptHandle=receipt_handle
+    #)
