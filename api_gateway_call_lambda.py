@@ -3,6 +3,10 @@ Building a Contact Form with API Gateway and SES
 This lesson demonstrates a web page with a typical contact form. Using API Gateway and a Lambda function as a backend for this form, we will send the form post contents via email using SES, and also write the contact data to DynamoDB.
 DynamoDB
 
+
+Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served.
+
+
 Create table Contact with primary partition key id:
 
 aws dynamodb create-table --table-name Contact \
