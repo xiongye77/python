@@ -1,6 +1,10 @@
 
 Create cloudwatch event or eventbridge event and set event data to {"TableName": "Person"} , event target is lambda backup function 
 
+Dynamodb db has Continuous Backups and Point-In-Time Recovery (PITR)
+
+
+
 
 
 from datetime import datetime
