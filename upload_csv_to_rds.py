@@ -10,7 +10,7 @@ logger.setLevel(logging.INFO)
 s3 = boto3.resource('s3')
 client = boto3.client('s3')
 
-
+#python3 -m pip install --user boto3
 #[ec2-user@ip-192-168-23-47 ~]$ python3 4.py
 #PRtLH9ITTwZawLLd
 #[ec2-user@ip-192-168-23-47 ~]$ more 4.py
