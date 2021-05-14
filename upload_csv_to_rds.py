@@ -1,3 +1,26 @@
+import mysql.connector
+import boto3
+ssm = boto3.client('ssm')
+parameter = ssm.get_parameter(Name='rds-mysql', WithDecryption=True)
+
+print (parameter)
+mydb = mysql.connector.connect(
+          host="database-3-instance-1.cxvimhqpr2vi.ap-south-1.rds.amazonaws.com",
+          user="admin",
+          passwd=parameter['Parameter']['Value'],
+          database="pets"
+          )
+cursor = mydb.cursor( buffered=True)
+cursor.execute("select * from test;")
+result = cursor.fetchall()
+for row in result:
+    print(row)
+
+mydb.disconnect()
+
+
+
+
 import psycopg2
 import boto3
 import os
