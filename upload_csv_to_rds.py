@@ -10,6 +10,18 @@ logger.setLevel(logging.INFO)
 s3 = boto3.resource('s3')
 client = boto3.client('s3')
 
+
+#[ec2-user@ip-192-168-23-47 ~]$ python3 4.py
+#PRtLH9ITTwZawLLd
+#[ec2-user@ip-192-168-23-47 ~]$ more 4.py
+#import boto3
+#ssm = boto3.client('ssm')
+#parameter = ssm.get_parameter(Name='/Dev/postgres-47161/RDS_PASSWORD', WithDecryption=True)
+#print(parameter['Parameter']['Value'])
+
+
+
+
 def lambda_handler(event, context):
     bucket_name = event['Records'][0]['s3']['bucket']['name']
     key = event['Records'][0]['s3']['object']['key']
