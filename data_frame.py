@@ -70,3 +70,32 @@ logout
 [ec2-user@ip-192-168-23-47 ~]$ python3 8.py
 
 import mysql.connector
+
+
+
+
+import pandas as pd
+
+stock_df = pd.read_csv('dow_jones_index.data')
+                       
+stock_df.head()
+
+
+ge_df = stock_df[stock_df.stock=='GE']
+ibm_df = stock_df[stock_df.stock=='IBM']
+krft_df = stock_df[stock_df.stock=='KRFT']
+
+with pd.ExcelWriter('stocks.xlsx') as writer:  
+    ge_df.to_excel(writer, sheet_name='GE')
+    ibm_df.to_excel(writer, sheet_name='IBM')
+    krft_df.to_excel(writer, sheet_name='KRFT')
+      
+      
+my_stock_df = pd.read_excel('stocks.xlsx', sheet_name=None)  
+
+my_stock_df.keys()
+#dict_keys(['GE', 'IBM', 'KRFT'])
+
+
+print (my_stock_df['GE'])
+
