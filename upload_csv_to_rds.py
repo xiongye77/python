@@ -43,6 +43,56 @@ client = boto3.client('s3')
 #print(parameter['Parameter']['Value'])
 
 
+def db_server_fetch(sql_query):
+    try:
+        # Make connection to db
+        cxn = psycopg2.connect(CONNECT_DB)
+
+        # Create a cursor to db
+        cur = cxn.cursor()
+
+        # Send sql query to request
+        cur.execute(sql_query)
+        records = cur.fetchall()
+
+    except (Exception, psycopg2.Error) as error :
+        print ("Error while connecting to PostgreSQL", error)
+
+    finally:
+        #closing database connection.
+        if(cxn):
+            cur.close()
+            cxn.close()
+            print("PostgreSQL connection is closed")
+        return records
+
+
+
+try:
+    # Make connection to db
+    cxn = psycopg2.connect(CONNECT_DB)
+    
+    # Create a cursor to db
+    cur = cxn.cursor()
+    
+    # read file, copy to db
+    with open('./vet.csv', 'r') as f:
+        # skip first row, header row
+        next(f)
+        cur.copy_from(f, 'customers', sep=",")
+        cxn.commit()
+
+except (Exception, psycopg2.Error) as error :
+    print ("Error while connecting to PostgreSQL", error)
+    
+finally:
+    #closing database connection.
+    if(cxn):
+        cur.close()
+        cxn.close()
+        print("PostgreSQL connection is closed")
+        print("customers table populated")
+
 
 
 def lambda_handler(event, context):
