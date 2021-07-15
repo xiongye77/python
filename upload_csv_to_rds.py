@@ -1,27 +1,120 @@
-[ec2-user@ip-192-168-23-47 mysql]$ python3 -m pip install -t . PyMySQL
-Collecting PyMySQL
-  Using cached PyMySQL-1.0.2-py3-none-any.whl (43 kB)
-Installing collected packages: PyMySQL
-Successfully installed PyMySQL-1.0.2
-[ec2-user@ip-192-168-23-47 mysql]$ ls -lt
+
+[ec2-user@ip-192-168-23-47 python]$ rm -rf *
+[ec2-user@ip-192-168-23-47 python]$ pip install pymysql==0.10.1 -t .
+Collecting pymysql==0.10.1
+  Using cached PyMySQL-0.10.1-py2.py3-none-any.whl (47 kB)
+Installing collected packages: pymysql
+Successfully installed pymysql-0.10.1
+[ec2-user@ip-192-168-23-47 python]$ ls -lt
 total 0
-drwxrwxr-x 2 ec2-user ec2-user 119 Jul 15 02:17 PyMySQL-1.0.2.dist-info
-drwxrwxr-x 4 ec2-user ec2-user 226 Jul 15 02:17 pymysql
-[ec2-user@ip-192-168-23-47 mysql]$ cd pymysql/
-[ec2-user@ip-192-168-23-47 pymysql]$ ls -l
-total 132
--rw-rw-r-- 1 ec2-user ec2-user  7399 Jul 15 02:17 _auth.py
--rw-rw-r-- 1 ec2-user ec2-user 10293 Jul 15 02:17 charset.py
--rw-rw-r-- 1 ec2-user ec2-user 51251 Jul 15 02:17 connections.py
-drwxrwxr-x 3 ec2-user ec2-user   165 Jul 15 02:17 constants
--rw-rw-r-- 1 ec2-user ec2-user  9430 Jul 15 02:17 converters.py
--rw-rw-r-- 1 ec2-user ec2-user 15366 Jul 15 02:17 cursors.py
--rw-rw-r-- 1 ec2-user ec2-user  3773 Jul 15 02:17 err.py
--rw-rw-r-- 1 ec2-user ec2-user  4391 Jul 15 02:17 __init__.py
--rw-rw-r-- 1 ec2-user ec2-user   573 Jul 15 02:17 optionfile.py
--rw-rw-r-- 1 ec2-user ec2-user 11859 Jul 15 02:17 protocol.py
-drwxrwxr-x 2 ec2-user ec2-user   310 Jul 15 02:17 __pycache__
--rw-rw-r-- 1 ec2-user ec2-user   360 Jul 15 02:17 times.py
+drwxrwxr-x 2 ec2-user ec2-user 135 Jul 15 07:15 PyMySQL-0.10.1.dist-info
+drwxrwxr-x 4 ec2-user ec2-user 279 Jul 15 07:15 pymysql
+[ec2-user@ip-192-168-23-47 python]$ cd ..
+[ec2-user@ip-192-168-23-47 temp]$ zip -r9 ../pymysql.zip .
+updating: python/ (stored 0%)
+updating: python/pymysql/ (stored 0%)
+updating: python/pymysql/__init__.py (deflated 59%)
+updating: python/pymysql/_auth.py (deflated 68%)
+updating: python/pymysql/charset.py (deflated 83%)
+updating: python/pymysql/connections.py (deflated 75%)
+updating: python/pymysql/converters.py (deflated 74%)
+updating: python/pymysql/cursors.py (deflated 72%)
+updating: python/pymysql/err.py (deflated 61%)
+updating: python/pymysql/optionfile.py (deflated 59%)
+updating: python/pymysql/protocol.py (deflated 72%)
+updating: python/pymysql/times.py (deflated 58%)
+updating: python/pymysql/constants/ (stored 0%)
+updating: python/pymysql/constants/CLIENT.py (deflated 50%)
+updating: python/pymysql/constants/COMMAND.py (deflated 56%)
+updating: python/pymysql/constants/CR.py (deflated 66%)
+updating: python/pymysql/constants/ER.py (deflated 63%)
+updating: python/pymysql/constants/FIELD_TYPE.py (deflated 45%)
+updating: python/pymysql/constants/FLAG.py (deflated 31%)
+updating: python/pymysql/constants/SERVER_STATUS.py (deflated 50%)
+updating: python/pymysql/constants/__init__.py (stored 0%)
+updating: python/pymysql/constants/__pycache__/ (stored 0%)
+updating: python/pymysql/constants/__pycache__/CLIENT.cpython-38.pyc (deflated 33%)
+updating: python/pymysql/constants/__pycache__/COMMAND.cpython-38.pyc (deflated 41%)
+updating: python/pymysql/constants/__pycache__/CR.cpython-38.pyc (deflated 51%)
+updating: python/pymysql/constants/__pycache__/ER.cpython-38.pyc (deflated 56%)
+updating: python/pymysql/constants/__pycache__/FIELD_TYPE.cpython-38.pyc (deflated 33%)
+updating: python/pymysql/constants/__pycache__/FLAG.cpython-38.pyc (deflated 26%)
+updating: python/pymysql/constants/__pycache__/SERVER_STATUS.cpython-38.pyc (deflated 37%)
+updating: python/pymysql/constants/__pycache__/__init__.cpython-38.pyc (deflated 22%)
+updating: python/pymysql/__pycache__/ (stored 0%)
+updating: python/pymysql/__pycache__/__init__.cpython-38.pyc (deflated 42%)
+updating: python/pymysql/__pycache__/_auth.cpython-38.pyc (deflated 47%)
+updating: python/pymysql/__pycache__/charset.cpython-38.pyc (deflated 64%)
+updating: python/pymysql/__pycache__/connections.cpython-38.pyc (deflated 54%)
+updating: python/pymysql/__pycache__/converters.cpython-38.pyc (deflated 59%)
+updating: python/pymysql/__pycache__/cursors.cpython-38.pyc (deflated 55%)
+updating: python/pymysql/__pycache__/err.cpython-38.pyc (deflated 54%)
+updating: python/pymysql/__pycache__/optionfile.cpython-38.pyc (deflated 40%)
+updating: python/pymysql/__pycache__/protocol.cpython-38.pyc (deflated 59%)
+updating: python/pymysql/__pycache__/times.cpython-38.pyc (deflated 47%)
+  adding: python/pymysql/_compat.py (deflated 50%)
+  adding: python/pymysql/_socketio.py (deflated 67%)
+  adding: python/pymysql/util.py (deflated 36%)
+  adding: python/pymysql/__pycache__/_compat.cpython-38.pyc (deflated 25%)
+  adding: python/pymysql/__pycache__/_socketio.cpython-38.pyc (deflated 50%)
+  adding: python/pymysql/__pycache__/util.cpython-38.pyc (deflated 34%)
+  adding: python/PyMySQL-0.10.1.dist-info/ (stored 0%)
+  adding: python/PyMySQL-0.10.1.dist-info/LICENSE (deflated 41%)
+  adding: python/PyMySQL-0.10.1.dist-info/METADATA (deflated 61%)
+  adding: python/PyMySQL-0.10.1.dist-info/WHEEL (deflated 14%)
+  adding: python/PyMySQL-0.10.1.dist-info/pbr.json (stored 0%)
+  adding: python/PyMySQL-0.10.1.dist-info/top_level.txt (stored 0%)
+  adding: python/PyMySQL-0.10.1.dist-info/RECORD (deflated 57%)
+  adding: python/PyMySQL-0.10.1.dist-info/INSTALLER (stored 0%)
+  adding: python/PyMySQL-0.10.1.dist-info/REQUESTED (stored 0%)
+  adding: mysql2.py (deflated 39%)
+  adding: mysql.py (deflated 38%)
+[ec2-user@ip-192-168-23-47 temp]$ aws lambda publish-layer-version --layer-name pymysql \
+>      --description "pymysql for mysql access" \
+>      --zip-file fileb://../pymysql.zip \
+>      --compatible-runtimes python3.8
+{
+    "Content": {
+        "Location": "https://awslambda-ap-s-1-layers.s3.ap-south-1.amazonaws.com/snapshots/207880003428/pymysql-1654143b-c093-4457-900e-fb31f65d3a28?versionId=Tnxu8RUVE3fK_VpKj2g1yhILhYf1y1ZD&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEC4aCmFwLXNvdXRoLTEiRzBFAiBWpy1A1THCYn5KNdIKtX0Mu1i8ZvWC5SHZ5D4HQcZmmgIhAKc%2FyuBJiyzeWhWzcnZeQMGJAKd53AVDkr5FdKfa9S%2BMKvwDCCYQAhoMNTQ1MjU1MjAxMzA3Igwp3SwY9a%2BQ6qiMCmIq2QPtolu75F4qGTbnPAe925AZXCuDyj7BVpS1wFxroUPDbvbSBDK7h9qiPWpy2BkyBJcaV9dqvsIVYhMfayw5Z9No6Z8g%2BgQLWkj0y3Zdmr3WlbH4oWr5fXvix7kT%2F2XVRne0Eih1NvbF1QzPbRNgthkIwaw2DaaOoaPNKIBeJ5VU6RUa9b9ConiSdyUPtxgzYPUgVWEdOqK3wuV0Ufw3ZH1zzFNCPkqBT3XoAfVMVMTvqlqw4v3OE8misjkOreHMzLMKn9xkHO6TC%2BQzsBtdc3yHRMr8bz68%2FUq9Qj4psT5A%2Bax0Usm4mW%2F5Jmx3GQvPSCWPiXq83QishG7O0zuLCb6SzUAxLf6s%2FGV31htT6am20RqBmhHVe%2Fq%2B6LuOvUUxzBcxGtNJ5cHIfiXn8kCNkDztbPZEpwq3CH9SUXKIT%2FbzRggVzOi5JSfbfFiMlwyZufiWkuAk13dM11Dn0oaIFlWhPSRvxvq4noP2f%2Bdk66ILzds0mlDvorO%2Be8s%2BMafmEnVBrM6KNmBvVtluaxQaKEf4J2sd4njBnc4YN3PJbYUHI2LE48FmDRgijKkZbNzVfMQytECOYeKUc5qTU44Wsk%2B9R6%2FbXuW7CdVtuUei%2BjkwkJhY3q%2BIUIy6vjD6kr%2BHBjqlAcvLwDRJXnXgRYNE6Z%2FdlzGlF3edaIB4FzQfbRfMXtu%2BwvHW6tYoLtSB5t8AHAfPHJCFTSEqQjPbepGHwGA8w3Z4gyZOGVmZ%2FY8LtjUU5e8iaKdKIP87cb9pmgkB%2BytMsoo2fi7yjPL3ONxAXlcYDE2WJ0R7r1XjrlDmygXOBiMGYuat5NRRIWTng9iK%2BfpWz7FE75wchpBAu2zFWlsDPZhTD7j1gg%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210715T071546Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIAX5456DIN23GVTON4%2F20210715%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=b85df0b46bacc945511ba97ab3b4621c6f6d7679850d65dc148ba01ac428d33d",
+        "CodeSha256": "PSFSOUcNwSTvfBCQ0yI3UFdHzxlcYDqUKJk/lVMaNiw=",
+        "CodeSize": 226314
+    },
+    "LayerArn": "arn:aws:lambda:ap-south-1:207880003428:layer:pymysql",
+    "LayerVersionArn": "arn:aws:lambda:ap-south-1:207880003428:layer:pymysql:3",
+    "Description": "pymysql for mysql access",
+    "CreatedDate": "2021-07-15T07:15:49.564+0000",
+    "Version": 3,
+    "CompatibleRuntimes": [
+        "python3.8"
+    ]
+}
+
+
+import pymysql 
+import json 
+import sys 
+def lambda_handler(event, context):
+     rds_host='database-2.cxvimhqpr2vi.ap-south-1.rds.amazonaws.com'
+     name='admin'
+     password='xxxxxxxx'
+     db_name='rds'
+     try:
+         conn = pymysql.connect(rds_host, user=name, passwd=password, db=db_name)
+     except Exception as e:
+         print(str(e))
+         print("ERROR: Unexpected error: Could not connect to MySql instance.")
+         sys.exit()
+     print("SUCCESS: Connection to RDS mysql instance succeeded")
+     with conn.cursor() as cur:
+        select_statement = 'select now(), DATE_SUB(NOW(), INTERVAL 4 DAY); '        
+        cur.execute(select_statement)
+        for doc in cur:
+           print( doc )
+                 
+     return {
+         "statusCode": 200,
+         "body": json.dumps('Hello from Lambda with Layer!')
+     } 
 
           
 [ec2-user@ip-192-168-23-47 mysql]$ zip -r9 mysql.zip ./mysql/
