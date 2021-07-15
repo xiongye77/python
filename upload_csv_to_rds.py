@@ -5,6 +5,12 @@ Collecting pymysql==0.10.1
   Using cached PyMySQL-0.10.1-py2.py3-none-any.whl (47 kB)
 Installing collected packages: pymysql
 Successfully installed pymysql-0.10.1
+
+[ec2-user@ip-192-168-23-47 temp]$ pip list  |grep -i  mysql
+mysql-connector-python                   8.0.25
+PyMySQL                                  0.10.1
+
+
 [ec2-user@ip-192-168-23-47 python]$ ls -lt
 total 0
 drwxrwxr-x 2 ec2-user ec2-user 135 Jul 15 07:15 PyMySQL-0.10.1.dist-info
