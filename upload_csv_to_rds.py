@@ -96,11 +96,54 @@ updating: python/pymysql/__pycache__/times.cpython-38.pyc (deflated 47%)
 }
 
 
+[ec2-user@ip-192-168-23-47 python]$  pip install pysecret  -t .
+Collecting pysecret
+  Using cached pysecret-0.0.8-py2.py3-none-any.whl (57 kB)
+
+[ec2-user@ip-192-168-23-47 python]$ cd ..
+[ec2-user@ip-192-168-23-47 temp]$ ls -lt
+total 8
+drwxrwxr-x 4 ec2-user ec2-user   54 Jul 15 10:46 python
+-rw-rw-r-- 1 ec2-user ec2-user 2915 Jul 15 10:42 mysql.py
+-rw-rw-r-- 1 ec2-user ec2-user  612 Jul 15 07:06 mysql2.py
+[ec2-user@ip-192-168-23-47 temp]$ zip -r9 ../pysecret.zip ./python/
+
+[ec2-user@ip-192-168-23-47 temp]$ aws lambda publish-layer-version --layer-name pysecret --description "pysecret" --zip-file fileb://../pysecret.zip --compatible-runtimes python3.8
+{
+    "Content": {
+        "Location": "https://awslambda-ap-s-1-layers.s3.ap-south-1.amazonaws.com/snapshots/207880003428/pysecret-10ca489e-6c8a-4870-a0de-5f4125d4c86a?versionId=nHCTKBg1JLDfpEqdANsuuARkseVeN7QV&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDIaCmFwLXNvdXRoLTEiSDBGAiEAs8DOUtAYwaVCv6BAnnx%2FNMfv%2Bv%2F7%2FTb%2BfOYXrQbmFUwCIQD9uaMP%2F%2FizLXhodldfQGi8%2B5upOnCQ43a%2BKzkBga4KkCr8AwgrEAIaDDU0NTI1NTIwMTMwNyIMmWgoirCZYEpzTV5%2FKtkDm2587wS4p0wW44fzZPNm5PtVgPShtu8YBIu1Dziu0UtuNcj0H5jpBbbCosczYPjArffORW8gsyJPOwkyYnzJBcm4myh%2BV0mTPaJgCfdzVdIxD8%2BX8GRuM2%2Bts0eGQKBIzwQgb75PduxFqalUXFwG5GKShTcn2CArFosDJHWF6PmE3ztp1iJ%2FiEK05JGct0IwpF1gXE6obP2RHQVJ7a3giDayWWz%2BxsWIP1PYMpuNcTpZGYbclcXGcIGTaq3z5corWV7h6nksjnn6I0oWN7O28LgLAcmdd1d8%2B2xMh1OwtXrCGWy%2FLY9T%2BxtrJM2g76zN%2BSAAryGyabI0%2B%2Ffr0cPIES7dF5TNPuPbT6E5PyHbsJaYGlHMFe%2BnqYp3qyV%2BBFxIcxRZdQkEctwPU9rwMxGMTdykxdvHCAeGalZOobi1WYQ6cEMZHm9fWGfMq2LrMBJS0neRrOiOYMpvFBNgTT%2B4k2otiRSUmca%2BJ4Xb4QU%2BPdZqHB42UAnvJdNZL%2F60U841NNaEH%2F%2FhP8CXjItN%2B7RmcrW7AXXzMz1RHsiUm6pec84C7ywYQ4xjOo%2B%2ByDJjJu16%2B%2F4dZOLCFspsUs%2BVqy1DZ0rUgaZTXtbPlTP%2FnbT0cKzByx6MCZBChnUwmI3AhwY6pAFkHi2ZytFbJRBreNecwKI77MRI5%2FXB%2FwYK0vyng3saz%2B1CHs5bjQtWHs7RfCQtkK4wpDLdXrnpPd6Dor0iMbOZ1zRnlbfOztvFpxrE1hP%2B1lCGGrftoccJz3AD%2BHLcOIbR%2BJ7hDwuhKFNlHVKKLBe25CA9qoecweDRy9LyHK%2FgAPP3VSNNiTC1jmwkl2qY9p7O9zZ1jGdDjjA2cHKdwqqpt3ypsA%3D%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210715T104909Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=ASIAX5456DINSMEQB4EA%2F20210715%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Signature=8d75e465eb3f216bdcdfeb88f1dcd853637dab2b238b173ae297e03353cd906c",
+        "CodeSha256": "o7kFhn3SaKzMywwNlpyGIlYPwHNQkaiPqWZSuH5LrYU=",
+        "CodeSize": 76803
+    },
+    "LayerArn": "arn:aws:lambda:ap-south-1:207880003428:layer:pysecret",
+    "LayerVersionArn": "arn:aws:lambda:ap-south-1:207880003428:layer:pysecret:1",
+    "Description": "pysecret",
+    "CreatedDate": "2021-07-15T10:49:12.919+0000",
+    "Version": 1,
+    "CompatibleRuntimes": [
+        "python3.8"
+    ]
+}
+
+
+Add two layers to lambda 
+
+
 import pymysql 
 import json 
 import sys 
+import boto3
+from pysecret import AWSSecret
 def lambda_handler(event, context):
+     ssm = boto3.client('ssm')
      rds_host='database-2.cxvimhqpr2vi.ap-south-1.rds.amazonaws.com'
+     parameter = ssm.get_parameter(Name='postgres-password', WithDecryption=True)
+     password=parameter['Parameter']['Value']
+     aws = AWSSecret()
+     username = aws.get_secret_value(secret_id="mysql-username", key="username")
+
+     print (username)
+
      name='admin'
      password='xxxxxxxx'
      db_name='rds'
