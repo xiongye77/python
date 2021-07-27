@@ -1,0 +1,27 @@
+yexiong@ubuntu:~$ more vm.sh 
+#!/bin/bash
+for i in $(cat au1servers.txt)
+do
+  ssh  $i " echo $i;sudo virsh list --all |grep 'sso3b.syd' "
+done
+
+
+yexiong@ubuntu:~/password$ more e.sh 
+input="hk_hostname_password.txt"
+while IFS=',' read -r f1 f2  
+do 
+   echo 'ssh' $f1'.hk1-a.acx' '"'"echo -e '$f2\n$f2'  | sudo passwd root"'"'
+done < "$input"
+yexiong@ubuntu:~/password$ more hostname_password.txt 
+app13.syd,jTnOYCfO7A
+app15.syd,DM889qPsk8
+app20.syd,RlBj6mvgU3
+
+
+
+yexiong@ubuntu:~$ more check_freemem.sh
+#!/bin/bash
+for i in $(cat dockerhosts.txt)
+do
+ echo $i &&  ssh  $i "free -g"
+done
