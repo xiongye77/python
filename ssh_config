@@ -1,0 +1,31 @@
+yexiong@ubuntu:~/.ssh/config.d$ more oci_config
+PreferredAuthentications publickey
+#---------------------------------------------------------------------
+#  Devcorp [Phoenix]
+#---------------------------------------------------------------------
+Host *us1dev.acx
+    ProxyJump devbastion
+    IdentityFile ~/.oci/oci_instance_private.pem
+    User opc
+
+Host devbastion
+    hostname 144.25.19.226
+    ForwardAgent yes
+    IdentityFile ~/.ssh/id_aconex
+    User yexion
+
+
+#---------------------------------------------------------------------
+#  Prod [Jeddah]
+#---------------------------------------------------------------------
+Host *ksa1-a.acx
+    ProxyJump ksa1bastion
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/id_aconex
+    User yexiong 
+
+Host ksa1bastion
+    hostname 192.29.226.215
+    ForwardAgent yes
+    IdentityFile ~/.ssh/id_aconex
+    User yexion 
