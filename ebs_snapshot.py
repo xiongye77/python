@@ -4,7 +4,7 @@ import boto3
 
 #def lambda_handler(event, context):  if use lambda 
 
-ec2_client = boto3.client('ec2')
+ec2_client = boto3.client('ec2',region_name='ap-southeast-2')
 regions = [region['RegionName']
                for region in ec2_client.describe_regions()['Regions']]
 
