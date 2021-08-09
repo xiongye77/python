@@ -9,11 +9,11 @@ regions = [region['RegionName']
                for region in ec2_client.describe_regions()['Regions']]
 
 for region in regions:
-    if region=='ap-south-1':
+    if region=='ap-southeast-2':
         print('Instances in EC2 Region {0}:'.format(region))
         ec2 = boto3.resource('ec2', region_name=region)
 
-        instances = ec2.instances.filter( Filters=[ {'Name': 'tag:backup', 'Values': ['true']},{'Name': 'instance-id', 'Values': ['i-046ae5c8d0ea12244']} ])
+        instances = ec2.instances.filter( Filters=[ {'Name': 'tag:backup', 'Values': ['true']})
         # ISO 8601 timestamp, i.e. 2019-01-31T14:01:58
         timestamp = datetime.utcnow().replace(microsecond=0).isoformat()
 
