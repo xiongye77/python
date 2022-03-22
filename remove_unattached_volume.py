@@ -1,9 +1,15 @@
 import boto3
+import datetime
+import sys
 
+orig_stdout = sys.stdout
+account_id = boto3.client('sts').get_caller_identity().get('Account')
+f = open('EBS_available_delete_%s.txt' % account_id, 'w')
+sys.stdout = f
 
 #def lambda_handler(object, context):
 
-    # Get list of regions
+# Get list of regions
 ec2_client = boto3.client('ec2')
 regions = [region['RegionName']
            for region in ec2_client.describe_regions()['Regions']]
@@ -18,6 +24,14 @@ for region in regions:
 
     for volume in volumes:
         v = ec2.Volume(volume.id)
-        print("Deleting EBS volume: {}, volume-type: {} Size: {} GiB Creation date {} ".format(v.id, v.volume_type ,v.size,v.create_time.strftime("%Y-%m-%d %
-H:%M:%S")))
-#            v.delete()
+        a= v.create_time
+        b=a.date()
+        c=datetime.datetime.now().date()
+        d=c-b
+        if d.days>10:
+            print("Deleting EBS volume: {}, volume-type: {} Size: {} GiB Creation date {} ".format(v.id, v.volume_type ,v.size,v.create_time.strftime("%Y-%m-%d %H:%M:%S")))
+            #v.delete()
+
+
+sys.stdout = orig_stdout
+f.close()
