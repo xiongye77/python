@@ -1,3 +1,20 @@
+Triggered by Eventbridge rule and target 
+
+create a rule based on EC2 Instance Terminations for EC2 auto scaling groups.
+Choose Pre-defined pattern by service
+For Service Provider choose AWS
+Under Service name we select Auto Scaling
+Event type should be set to Instance Launch and Terminate
+Select Specific instance event(s)
+Set it to EC2 Instance Terminate Successful
+Select the Any group name option.
+The JSON should look like the provided sample below:
+{
+  "source": ["aws.autoscaling"],
+  "detail-type": ["EC2 Instance Terminate Successful"]
+}
+
+
 # importing modules
 import logging
 import boto3
